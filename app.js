@@ -564,7 +564,6 @@ els.content?.addEventListener("wheel", (e)=>{
   }
 }, { passive:false });
 
-
 // ---- Init ----
 (async function init(){
   applySettings();
@@ -574,4 +573,24 @@ els.content?.addEventListener("wheel", (e)=>{
   renderBook();
 
   registerSW();
+
+// ===== 読み上げ機能 =====
+
+const btnRead = document.getElementById("btnRead");
+const btnStop = document.getElementById("btnStop");
+
+btnRead.onclick = () => {
+  const text = document.getElementById("content").innerText;
+
+  const uttr = new SpeechSynthesisUtterance(text);
+  uttr.lang = "ja-JP";
+  uttr.rate = 1; // 読み上げ速度
+
+  speechSynthesis.speak(uttr);
+};
+
+btnStop.onclick = () => {
+  speechSynthesis.cancel();
+};
+  
 })();
